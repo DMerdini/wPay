@@ -1,25 +1,12 @@
 //
-
-let sysusers = [
-  {
-    // later change username with email
-    sysusername: "pablo",
-    sysuserpass: "123",
-    accdetails: {
-      accusename: "Pablo",
-      accuserlastname: "Picasso",
-      accuserpic: "",
-    },
-    acccards: [{ acccardname: "", acccardiban: "", acccardstatus: "" }],
-    accbills: [{ accbillname: "", accbillamount: "", accbillstatus: "" }],
-  },
-];
+import { sysusers } from "./users.js";
 
 function checkauth() {
   let enteredusername = document.getElementById("enteredemail").value.trim();
   let enteredpass = document.getElementById("enteredpass").value.trim();
   let founduser = sysusers.find((user) => {
-    return user.sysusername.toLowerCase() === enteredusername.toLowerCase();
+    user.sysusername.toLowerCase() === enteredusername.toLowerCase() &&
+      user.sysuserpass == enteredpass;
   });
 
   if (founduser) {
@@ -35,3 +22,4 @@ function checkauth() {
     }, 4000);
   }
 }
+document.getElementById("enteredpass").addEventListener((event) => {});
