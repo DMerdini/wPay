@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+* {
+  font-family: "Roboto", serif;
+}
+:root {
+  --chefchaouen-blue: #448affff;
+  --green-blue: #1565c0ff;
+  --persian-green: #009688ff;
+  --yellow-green: #8bc34aff;
+  --amber: #ffc107ff;
+  --orange-peel: #ff9800ff;
+  --vermilion: #f44336ff;
+  --amaranth-purple: #ad1457ff;
+  --greylight: #777777ff;
+  --mywhite: #fcfdfeff;
+
+  --hvr-chefchaouen-blue: #4b8cfd;
+  --hvr-green-blue: #1d6ac2;
+  --hvr-persian-green: #099486;
+  --hvr-yellow-green: #8fc057;
+  --hvr-amber: #f8c11d;
+  --hvr-orange-peel: #fca31f;
+  --hvr-vermilion: #f55347;
+  --hvr-amaranth-purple: #a82960;
+}
+body {
+  margin: 0;
+  background: linear-gradient(
+    90deg,
+    var(--hvr-chefchaouen-blue) 0%,
+    var(--hvr-yellow-green) 100%
+  );
+  background-size: 400% 100%;
+}
+.container {
+  width: 95%;
+  margin: auto;
+}
+.formcontainer {
+  min-height: 100dvh;
+  width: 40%;
+  margin: auto;
+  display: grid;
+  place-items: center;
+}
+.loginform {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.formrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 10px;
+}
+.formrow > label {
+  font: 500 18px roboto;
+  color: var(--greylight);
+}
+.formrow > input {
+  border: none;
+  border-bottom: 1px solid var(--orange-peel);
+  text-align: center;
+  font: 500 19px "roboto";
+  outline: none;
+}
+.formbutons {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}
+.btn {
+  width: 50%;
+  padding: 15px;
+  border: none;
+}
+.loginbtn {
+  background: var(--persian-green);
+  color: var(--mywhite);
+  transition: all 250ms;
+}
+.loginbtn:hover {
+  background: var(--hvr-persian-green);
+}
+.resetbtn {
+}
