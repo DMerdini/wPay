@@ -21,5 +21,17 @@ function checkauth() {
   let founduser = sysusers.find((user) => {
     return user.sysusername.toLowerCase() === enteredusername.toLowerCase();
   });
-  localStorage.getItem("userfound", JSON.stringify(founduser));
+
+  if (founduser) {
+    let alertmsg = document.getElementById("welcomemodal");
+    console.log(alertmsg);
+
+    document.getElementById("welcomeusername").innerHTML =
+      "Welcome back " + founduser.accdetails.accusename + "!";
+    alertmsg.style.display = "block";
+    localStorage.setItem("userfound", JSON.stringify(founduser));
+    setTimeout(() => {
+      window.location.href = "dashboard.html";
+    }, 4000);
+  }
 }
