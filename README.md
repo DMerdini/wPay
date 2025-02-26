@@ -1,0 +1,1 @@
+# wPay-dashboard-template
