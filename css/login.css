@@ -58,17 +58,19 @@ body {
   place-items: center;
 }
 .loginform {
+  box-shadow: inset 2px 2px 23px 11px #ffffff22;
   padding: 35px;
   backdrop-filter: blur(15px);
   display: flex;
   border: 1px solid var(--mywhite);
   border-radius: 22px;
-  /* background: #ffffff33; */
+  background: #ffffff11;
+
   flex-direction: column;
   align-items: center;
 }
 .loginform > h1 {
-  color: var(--hvr-yellow-green);
+  color: var(--mywhite);
 }
 .loginform > h1 > a {
   color: inherit;
@@ -104,21 +106,32 @@ body {
   gap: 10px;
 }
 .btn {
+  border-radius: 5px;
+
   width: 50%;
   padding: 15px;
   border: none;
   color: var(--mywhite);
 }
 .loginbtn {
+  box-shadow: inset 2px 2px 12px 11px #076d63;
   background: var(--persian-green);
   color: var(--mywhite);
   transition: all 250ms;
 }
 .loginbtn:hover {
   background: var(--hvr-persian-green);
+  box-shadow: inset 0px 2px 6px 6px #0a7469;
+  scale: 1.05;
 }
 .resetbtn {
+  transition: all 250ms;
   background: var(--amaranth-purple);
+  box-shadow: inset 2px 2px 12px 11px #71192f;
+}
+.resetbtn:hover {
+  box-shadow: inset 0px 2px 6px 6px #771e34;
+  scale: 1.05;
 }
 .welcomemodal {
   display: block;
