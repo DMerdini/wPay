@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
       showSection(targetId); // Show corresponding section
     });
   });
+  // 552252
 
   // **Ensure first section appears with fade-in**
   const firstSection = contentSections[0]; // First div
