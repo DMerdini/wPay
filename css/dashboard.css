@@ -104,3 +104,149 @@ body {
   display: block !important; /* Ensure the first section is visible */
   opacity: 1;
 }
+.dashboard {
+  display: flex;
+  gap: 40px;
+  padding: 50px;
+}
+.accountdetails,
+.accountaction {
+  width: 50%;
+  border-radius: 20px;
+
+  height: calc(100vh - 250px);
+}
+.accountdetails {
+  padding: 35px;
+  background-color: white;
+}
+.accountframe {
+  width: 100%;
+  background: #099486;
+  /* display: grid; */
+  aspect-ratio: 2.2 /1;
+  display: flex;
+}
+#logeduserprofile {
+  place-self: center;
+  width: 100%;
+}
+.accountheading {
+  display: flex;
+}
+.accountbody {
+  display: flex;
+  flex-direction: column;
+}
+.userdetals {
+}
+.username {
+  display: flex;
+}
+.email {
+}
+.accountaction {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.accountslist {
+  max-height: 30vh;
+  background-color: white;
+  border-radius: 20px;
+  padding: 35px;
+}
+.accountheading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 0;
+}
+#accounts {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.account {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.accdetails {
+  width: 70%;
+}
+.accdetails > * {
+  margin: 4px;
+  font-size: 1rem;
+  font-weight: 400;
+}
+.accdetails > *:first-child {
+  font-weight: 600;
+}
+.accountbtn {
+  height: 40px;
+  border-radius: 50px;
+  border: none;
+  color: var(--mywhite);
+  padding: 5px 20px;
+}
+.activebtn {
+  background: var(--persian-green);
+}
+.inactivebtn {
+  background-color: var(--vermilion);
+}
+
+.billslist {
+  max-height: 30vh;
+  background-color: white;
+  border-radius: 20px;
+  padding: 35px;
+}
+.billsheading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.billsheading > button {
+  height: 35px;
+}
+#bills {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.bill {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.billbody {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.billstatus {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+.billactive {
+  background: var(--yellow-green);
+}
+.billpanding {
+  background: var(--amaranth-purple);
+}
+.billinactive {
+  background: var(--greylight);
+}
+.billtitle {
+}
+.billbtn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 50px;
+  color: var(--mywhite);
+  min-width: 80px;
+  max-width: 100px;
+}
