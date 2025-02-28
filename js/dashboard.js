@@ -90,9 +90,31 @@ document.getElementById("logoutbtn").addEventListener("click", userLogout);
 document.addEventListener("DOMContentLoaded", function () {
   const navItems = document.querySelectorAll(".navli a"); // Select all navbar links
   const contentSections = document.querySelectorAll(".main > div"); // Select all content divs
+  console.log(contentSections);
 
   // Function to show the selected section and hide others
   function showSection(id) {
+    contentSections.forEach((section) => {
+      if (section.id === id) {
+        section.style.display = "block"; // Ensure it's visible
+        setTimeout(() => {
+          section.style.opacity = "1"; // Smooth fade-in
+          section.style.pointerEvents = "auto"; // Re-enable interaction
+        }, 50);
+      } else {
+        section.style.opacity = "0"; // Start fade-out
+        section.style.pointerEvents = "none"; // Prevent interaction while fading out
+        setTimeout(() => {
+          if (section.id !== id) {
+            section.style.opacity = "0";
+            section.style.display = "none"; // Hide only if it's not the target section
+          }
+        }, 300);
+      }
+    });
+  }
+
+  /* function showSection(id) {
     contentSections.forEach((section) => {
       if (section.id === id) {
         section.style.display = "block"; // Make visible
@@ -107,6 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+    */
 
   // Add event listeners to navbar items
   navItems.forEach((item) => {
