@@ -152,6 +152,7 @@ body {
   background: #edfbd8;
   border-radius: 8px;
   box-shadow: 0px 0px 5px -3px #111;
+ cursor: progress;
   animation: alertboxslidein 230ms ease-out;
 }
 

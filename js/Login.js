@@ -121,6 +121,7 @@ function handleAuthenticationSuccess(user) {
     "suceccmodal",
     `Welcome back, ${user.accdetails.accusename}!`
   );
+  document.getElementsByTagName("body")[0].style.cursor = "progress";
 
   setTimeout(() => {
     closeAllModals();
@@ -169,3 +170,8 @@ function toggleDisplay(elementId, displayStyle) {
 function redirectTo(url) {
   window.location.href = url;
 }
+document.getElementById("enteredpass").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    authenticateUser();
+  }
+});

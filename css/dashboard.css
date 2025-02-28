@@ -36,9 +36,20 @@ body {
   display: flex;
 }
 #logoutbtn {
+  font: 600 1rem "roboto";
+  color: var(--amber);
+  text-shadow: 0px 0px 2px var(--chefchaouen-blue);
+  box-shadow: 2px 2px 11px 3px #f8c11d33;
   position: absolute;
+  z-index: 1;
+  padding: 8px 25px;
+  border-radius: 50px;
+  border: 1px solid var(--amaranth-purple);
+  background: var(--hvr-amaranth-purple);
   top: 20px;
   right: 20px;
+}
+#logoutbtn:hover {
 }
 #leftnvabar {
   display: flex;
@@ -79,13 +90,18 @@ body {
   color: var(--darkgrey) !important;
   font: 600 1rem "roboto";
 }
-#active svg {
-  fill: var(--amaranth-purple);
+.active svg {
+  fill: var(--amaranth-purple) !important;
+  scale: 1.3;
+  rotate: 365deg;
 }
 .navli {
 }
 .navliframe {
   width: 25px;
+}
+.navliframe svg {
+  transition: all 200ms;
 }
 .main {
   width: 100%;
@@ -120,17 +136,30 @@ body {
   padding: 35px;
   background-color: white;
 }
+
+/*  */
 .accountframe {
   width: 100%;
   background: #099486;
-  /* display: grid; */
-  aspect-ratio: 2.2 /1;
+  aspect-ratio: 2.2 / 1;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 10px;
+  position: relative;
+}
+.accountframe:hover #logeduserprofile {
+  scale: 1.01;
 }
 #logeduserprofile {
   place-self: center;
+
   width: 100%;
+  transition: 5000ms all;
 }
+
+/*  */
 .accountheading {
   display: flex;
 }
@@ -151,10 +180,13 @@ body {
   gap: 40px;
 }
 .accountslist {
-  max-height: 30vh;
+  max-height: 33vh;
   background-color: white;
   border-radius: 20px;
   padding: 35px;
+}
+.accountslist::-webkit-scrollbar {
+  display: none;
 }
 .accountheading {
   display: flex;
@@ -162,10 +194,25 @@ body {
   align-items: center;
   margin: 5px 0;
 }
+.editaccounts {
+  height: 35px;
+  border: 1px solid var(--amaranth-purple);
+  border-radius: 50px;
+  padding: 4px 15px;
+  background: var(--hvr-amaranth-purple);
+
+  color: var(--mywhite);
+}
 #accounts {
+  min-height: 15vh;
   display: flex;
   flex-direction: column;
   gap: 5px;
+  overflow: scroll;
+  max-height: 25vh;
+}
+#accounts::-webkit-scrollbar {
+  display: none;
 }
 .account {
   display: flex;
@@ -208,13 +255,24 @@ body {
   justify-content: space-between;
   align-items: center;
 }
-.billsheading > button {
+.filterbills {
   height: 35px;
+  border: 1px solid var(--amaranth-purple);
+  border-radius: 50px;
+  padding: 4px 15px;
+  background: var(--hvr-amaranth-purple);
+  color: var(--mywhite);
 }
 #bills {
+  max-height: 23vh;
+  min-height: 15vh;
+  overflow: scroll;
   display: flex;
   flex-direction: column;
   gap: 25px;
+}
+#bills::-webkit-scrollbar {
+  display: none;
 }
 .bill {
   display: flex;

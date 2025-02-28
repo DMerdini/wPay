@@ -29,10 +29,12 @@ function populateAccounts(acccards) {
 function populatebills(accbills) {
   const billContainer = document.getElementById("bills");
   billContainer.innerHTML = "";
-  accbills.forEach((bill) => {
-    let useraccountbill = document.createElement("div");
-    useraccountbill.classList.add("bill"); // Fixed typo from "acount" to "account"
-    useraccountbill.innerHTML = `  <div class="billbody">
+
+  if (accbills.length != 0) {
+    accbills.forEach((bill) => {
+      let useraccountbill = document.createElement("div");
+      useraccountbill.classList.add("bill"); // Fixed typo from "acount" to "account"
+      useraccountbill.innerHTML = `  <div class="billbody">
                         <div class="billstatus billactive"></div>
                         <div class="billtitle">${bill.accbillname}</div>
                       </div>
@@ -41,11 +43,16 @@ function populatebills(accbills) {
                           ? "activebtn"
                           : "inactivebtn"
                       }">${
-      bill.accbillstatus === "Paid" ? "view" : "Pay"
-    }</button>`;
+        bill.accbillstatus === "Paid" ? "view" : "Pay"
+      }</button>`;
 
-    document.getElementById("bills").appendChild(useraccountbill);
-  });
+      document.getElementById("bills").appendChild(useraccountbill);
+    });
+  } else {
+    let nodatayet = document.createElement("div");
+    nodatayet.innerHTML = `<h3 style="text-align:center;color:var(--greylight)">No bills to show</h1>`;
+    billContainer.appendChild(nodatayet);
+  }
 }
 function populateprofile(accdetails, lastLogin) {
   document.getElementById("logeduserfullname").innerHTML =
@@ -125,6 +132,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 100);
   }
 });
+
+//
+const frame = document.querySelector(".accountframe");
+const image = document.querySelector("#logeduserprofile");
+
+frame.addEventListener("mousemove", (e) => {
+  const { left, top, width, height } = frame.getBoundingClientRect();
+  const x = (e.clientX - left - width / 2) / 75; // Adjust intensity
+  const y = (e.clientY - top - height / 2) / 75;
+
+  image.style.transform = `translate(${x}px, ${y}px) scale(1.3)`;
+});
+
+frame.addEventListener("mouseleave", () => {
+  image.style.transform = "translate(0, 0) scale(1.1)";
+});
+//
 
 /*
 function populateUserData(user) {

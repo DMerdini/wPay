@@ -24,6 +24,27 @@ export let sysusers = [
         expiryDate: "2027-06-10T09:15:00Z",
       },
       {
+        acccardname: "Visa Classic",
+        acccardiban: "ES9121000418450200051332",
+        acccardstatus: "Active",
+        issuedDate: "2023-06-10T09:15:00Z",
+        expiryDate: "2027-06-10T09:15:00Z",
+      },
+      {
+        acccardname: "Visa Classic",
+        acccardiban: "ES9121000418450200051332",
+        acccardstatus: "Active",
+        issuedDate: "2023-06-10T09:15:00Z",
+        expiryDate: "2027-06-10T09:15:00Z",
+      },
+      {
+        acccardname: "Visa Classic",
+        acccardiban: "ES9121000418450200051332",
+        acccardstatus: "Active",
+        issuedDate: "2023-06-10T09:15:00Z",
+        expiryDate: "2027-06-10T09:15:00Z",
+      },
+      {
         acccardname: "Visa ",
         acccardiban: "ES9121000418450200051332",
         acccardstatus: "Active",
@@ -32,6 +53,24 @@ export let sysusers = [
       },
     ],
     accbills: [
+      {
+        accbillname: "Electricity Bill",
+        accbillamount: "€75.50",
+        accbillstatus: "Paid",
+        billDate: "2025-02-10T08:00:00Z",
+      },
+      {
+        accbillname: "Electricity Bill",
+        accbillamount: "€75.50",
+        accbillstatus: "Paid",
+        billDate: "2025-02-10T08:00:00Z",
+      },
+      {
+        accbillname: "Electricity Bill",
+        accbillamount: "€75.50",
+        accbillstatus: "Paid",
+        billDate: "2025-02-10T08:00:00Z",
+      },
       {
         accbillname: "Electricity Bill",
         accbillamount: "€75.50",
@@ -65,7 +104,7 @@ export let sysusers = [
       accuserlastname: "Curie",
       accuseremail: "samplemail@gmail.com",
       accuserphone: "+35567686970",
-      accuserpic: "../images/profile_marie.jpg",
+      accuserpic: "../images/profile_marie.jpeg",
     },
     acccards: [
       {
@@ -76,14 +115,7 @@ export let sysusers = [
         expiryDate: "2026-11-20T14:00:00Z",
       },
     ],
-    accbills: [
-      {
-        accbillname: "Water Bill",
-        accbillamount: "€30.75",
-        accbillstatus: "Paid",
-        billDate: "2025-02-12T07:30:00Z",
-      },
-    ],
+    accbills: [],
   },
   {
     sysusername: "leonardo",
