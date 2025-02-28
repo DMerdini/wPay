@@ -1,281 +1,191 @@
-function authChecker() {
-  const user = JSON.parse(localStorage.getItem("userfound"));
-  if (!user) {
-    redirectTo("login.html");
+class DashboardController {
+  constructor() {
+    this.sectionMap = {
+      mydashboard: 'dashboardwrapper',
+      account: 'accountwrapper',
+      mobile: 'mobilewrapper',
+      payments: 'paymentswrapper',
+      complaints: 'complaintswrapper',
+      support: 'supportwrapper'
+    };
+    
+    this.initializeEventListeners();
+    this.initializeDashboard();
   }
-  return user;
-}
-function populateAccounts(acccards) {
-  const accountsContainer = document.getElementById("accounts");
-  accountsContainer.innerHTML = ""; // Clear existing accounts
 
-  acccards.forEach((card) => {
-    let useraccountcard = document.createElement("div");
-    useraccountcard.classList.add("account"); // Fixed typo from "acount" to "account"
-    useraccountcard.innerHTML = `
-      <div class="accdetails">
-        <h2>${card.acccardname}</h2>
-        <h2>${card.acccardiban}</h2>
-      </div>
-      <button type="button" class="accountbtn ${
-        card.acccardstatus === "Active" ? "activebtn" : "inactivebtn"
-      }">
-        Block Account
-      </button>
-    `;
-    accountsContainer.appendChild(useraccountcard);
-  });
-}
-function populatebills(accbills) {
-  const billContainer = document.getElementById("bills");
-  billContainer.innerHTML = "";
+  // Authentication
+  static authChecker() {
+    try {
+      const user = JSON.parse(localStorage.getItem('userfound'));
+      if (!user) {
+        DashboardController.redirectTo('login.html');
+        return null;
+      }
+      return user;
+    } catch (error) {
+      console.error('Authentication check failed:', error);
+      DashboardController.redirectTo('login.html');
+      return null;
+    }
+  }
 
-  if (accbills.length != 0) {
-    accbills.forEach((bill) => {
-      let useraccountbill = document.createElement("div");
-      useraccountbill.classList.add("bill"); // Fixed typo from "acount" to "account"
-      useraccountbill.innerHTML = `  <div class="billbody">
-                        <div class="billstatus billactive"></div>
-                        <div class="billtitle">${bill.accbillname}</div>
-                      </div>
-                      <button type="button" class="billbtn ${
-                        bill.accbillstatus === "Paid"
-                          ? "activebtn"
-                          : "inactivebtn"
-                      }">${
-        bill.accbillstatus === "Paid" ? "view" : "Pay"
-      }</button>`;
+  static redirectTo(url) {
+    window.location.href = url;
+  }
 
-      document.getElementById("bills").appendChild(useraccountbill);
+  // Data Population
+  populateAccounts(acccards) {
+    const accountsContainer = document.getElementById('accounts');
+    if (!accountsContainer) return;
+
+    accountsContainer.innerHTML = '';
+    
+    acccards.forEach(card => {
+      const accountElement = document.createElement('div');
+      accountElement.className = 'account';
+      accountElement.innerHTML = `
+        <div class="accdetails">
+          <h2>${card.acccardname || 'N/A'}</h2>
+          <h2>${card.acccardiban || 'N/A'}</h2>
+        </div>
+        <button type="button" class="accountbtn ${card.acccardstatus === 'Active' ? 'activebtn' : 'inactivebtn'}">
+          Block Account
+        </button>
+      `;
+      accountsContainer.appendChild(accountElement);
     });
-  } else {
-    let nodatayet = document.createElement("div");
-    nodatayet.innerHTML = `<h3 style="text-align:center;color:var(--greylight)">No bills to show</h1>`;
-    billContainer.appendChild(nodatayet);
   }
-}
-function populateprofile(accdetails, lastLogin) {
-  document.getElementById("logeduserfullname").innerHTML =
-    accdetails.accusename + " " + accdetails.accuserlastname;
-  document.getElementById("loggeduserpnone").innerHTML =
-    accdetails.accuserphone;
-  document.getElementById("loggedusermail").innerHTML = accdetails.accuseremail;
-  document.getElementById("logeduserprofile").src = accdetails.accuserpic;
 
-  document.getElementById("");
-}
-document.addEventListener("DOMContentLoaded", function () {
-  const user = authChecker(); // Check auth and get user
-  if (user) {
-    populateAccounts(user.acccards); // Populate accounts section
-    populatebills(user.accbills);
-    populateprofile(user.accdetails, user.lastLogin);
+  populateBills(accbills) {
+    const billContainer = document.getElementById('bills');
+    if (!billContainer) return;
+
+    billContainer.innerHTML = '';
+
+    if (accbills?.length > 0) {
+      accbills.forEach(bill => {
+        const billElement = document.createElement('div');
+        billElement.className = 'bill';
+        billElement.innerHTML = `
+          <div class="billbody">
+            <div class="billstatus billactive"></div>
+            <div class="billtitle">${bill.accbillname || 'Untitled'}</div>
+          </div>
+          <button type="button" class="billbtn ${bill.accbillstatus === 'Paid' ? 'activebtn' : 'inactivebtn'}">
+            ${bill.accbillstatus === 'Paid' ? 'View' : 'Pay'}
+          </button>
+        `;
+        billContainer.appendChild(billElement);
+      });
+    } else {
+      billContainer.innerHTML = '<h3 style="text-align:center;color:var(--greylight)">No bills to show</h3>';
+    }
   }
-});
 
-function userLogout() {
-  localStorage.removeItem("userfound");
-  redirectTo("login.html");
-}
+  populateProfile(accdetails, lastLogin) {
+    const elements = {
+      fullname: document.getElementById('logeduserfullname'),
+      phone: document.getElementById('loggeduserpnone'),
+      email: document.getElementById('loggedusermail'),
+      profilePic: document.getElementById('logeduserprofile')
+    };
 
-function redirectTo(url) {
-  window.location.href = url;
-}
+    if (Object.values(elements).some(el => !el)) {
+      console.error('Profile elements not found');
+      return;
+    }
 
-// Run auth check on page load
-authChecker();
-document.getElementById("logoutbtn").addEventListener("click", userLogout);
+    elements.fullname.textContent = `${accdetails.accusename || ''} ${accdetails.accuserlastname || ''}`;
+    elements.phone.textContent = accdetails.accuserphone || '';
+    elements.email.textContent = accdetails.accuseremail || '';
+    elements.profilePic.src = accdetails.accuserpic || '';
+  }
 
-// ketu fillon kodi i  ri
-document.addEventListener("DOMContentLoaded", function () {
-  const navItems = document.querySelectorAll(".navli a"); // Select all navbar links
-  const contentSections = document.querySelectorAll(".main > div"); // Select all content divs
-  console.log(contentSections);
+  // Navigation
+  showSection(id) {
+    const contentSections = document.querySelectorAll('.main > div');
+    const targetId = this.sectionMap[id.toLowerCase()];
 
-  // Function to show the selected section and hide others
-  function showSection(id) {
-    contentSections.forEach((section) => {
-      if (section.id === id) {
-        section.style.display = "block"; // Ensure it's visible
-        setTimeout(() => {
-          section.style.opacity = "1"; // Smooth fade-in
-          section.style.pointerEvents = "auto"; // Re-enable interaction
-        }, 50);
+    contentSections.forEach(section => {
+      if (section.id === targetId) {
+        section.style.display = 'block';
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            section.style.opacity = '1';
+          }, 10);
+        });
       } else {
-        section.style.opacity = "0"; // Start fade-out
-        section.style.pointerEvents = "none"; // Prevent interaction while fading out
+        section.style.opacity = '0';
         setTimeout(() => {
-          if (section.id !== id) {
-            section.style.opacity = "0";
-            section.style.display = "none"; // Hide only if it's not the target section
-          }
+          section.style.display = 'none';
         }, 300);
       }
     });
   }
 
-  /* function showSection(id) {
-    contentSections.forEach((section) => {
-      if (section.id === id) {
-        section.style.display = "block"; // Make visible
-        setTimeout(() => {
-          section.style.opacity = "1"; // Smooth fade-in
-        }, 50);
-      } else {
-        section.style.opacity = "0"; // Start fade-out
-        setTimeout(() => {
-          section.style.display = "none"; // Hide completely after fading
-        }, 300);
-      }
-    });
+  // Event Handlers
+  handleLogout() {
+    localStorage.removeItem('userfound');
+    DashboardController.redirectTo('login.html');
   }
-    */
 
-  // Add event listeners to navbar items
-  navItems.forEach((item) => {
-    item.addEventListener("click", function (e) {
-      e.preventDefault();
-
-      // Remove 'active' class from all and add to clicked one
-      navItems.forEach((nav) => nav.classList.remove("active"));
-      this.classList.add("active");
-
-      const targetId = this.id.toLowerCase(); // Get clicked item's ID
-      showSection(targetId); // Show corresponding section
-    });
-  });
-  // 552252
-
-  // **Ensure first section appears with fade-in**
-  const firstSection = contentSections[0]; // First div
-  if (firstSection) {
-    firstSection.style.display = "block"; // Make it visible
-    setTimeout(() => {
-      firstSection.style.opacity = "1"; // Smooth fade-in
-    }, 100);
+  handleProfileHover(e) {
+    const frame = e.currentTarget;
+    const image = frame.querySelector('#logeduserprofile');
+    const { left, top, width, height } = frame.getBoundingClientRect();
+    const x = (e.clientX - left - width / 2) / 75;
+    const y = (e.clientY - top - height / 2) / 75;
+    image.style.transform = `translate(${x}px, ${y}px) scale(1.3)`;
   }
-});
 
-//
-const frame = document.querySelector(".accountframe");
-const image = document.querySelector("#logeduserprofile");
+  handleProfileLeave(e) {
+    const image = e.currentTarget.querySelector('#logeduserprofile');
+    image.style.transform = 'translate(0, 0) scale(1.1)';
+  }
 
-frame.addEventListener("mousemove", (e) => {
-  const { left, top, width, height } = frame.getBoundingClientRect();
-  const x = (e.clientX - left - width / 2) / 75; // Adjust intensity
-  const y = (e.clientY - top - height / 2) / 75;
+  
+  initializeEventListeners() {
+    document.getElementById('logoutbtn')?.addEventListener('click', () => this.handleLogout());
 
-  image.style.transform = `translate(${x}px, ${y}px) scale(1.3)`;
-});
+    const navItems = document.querySelectorAll('.navli a');
+    navItems.forEach(item => {
+      item.addEventListener('click', e => {
+        e.preventDefault();
+        navItems.forEach(nav => nav.classList.remove('active'));
+        item.classList.add('active');
+        this.showSection(item.id);
+      });
+    });
 
-frame.addEventListener("mouseleave", () => {
-  image.style.transform = "translate(0, 0) scale(1.1)";
-});
-//
+    const frame = document.querySelector('.accountframe');
+    if (frame) {
+      frame.addEventListener('mousemove', this.handleProfileHover);
+      frame.addEventListener('mouseleave', this.handleProfileLeave);
+    }
+  }
 
-/*
-function populateUserData(user) {
-  // Profile Section
-  const fullNameElement = document.getElementById("logeduserfullname");
-  const emailElement = document.querySelector(".email p");
-  const lastLoginElement = document.querySelector(
-    ".usermetadata p:first-child"
-  );
-  const osElement = document.querySelector(".usermetadata p:last-child");
-  const phoneElement = document.querySelector(".username p:last-child");
+  initializeDashboard() {
+    const user = DashboardController.authChecker();
+    if (!user) return;
 
-  fullNameElement.textContent = `${user.accdetails.accusename} ${user.accdetails.accuserlastname}`;
-  emailElement.textContent = `${user.sysusername}@gmail.com`; // Assuming email format, adjust if needed
-  lastLoginElement.textContent = `Last login: ${new Date(
-    user.lastLogin.timestamp
-  ).toLocaleString()}`;
-  osElement.textContent = user.lastLogin.os;
-  phoneElement.textContent = "+35568686868"; // Static in HTML, update if dynamic data exists
+    this.populateAccounts(user.acccards || []);
+    this.populateBills(user.accbills || []);
+    this.populateProfile(user.accdetails || {}, user.lastLogin || {});
 
-  // Accounts Section
-  const accountsContainer = document.getElementById("accounts");
-  accountsContainer.innerHTML = ""; // Clear existing accounts
-  user.acccards.forEach((card) => {
-    const accountDiv = document.createElement("div");
-    accountDiv.classList.add("account");
-    accountDiv.innerHTML = `
-      <div class="accdetails">
-        <h2>${card.acccardname}</h2>
-        <h2>${card.acccardiban}</h2>
-      </div>
-      <button type="button" class="accountbtn ${
-        card.acccardstatus === "Active" ? "activebtn" : "inactivebtn"
-      }">
-        Block Account
-      </button>
-    `;
-    accountsContainer.appendChild(accountDiv);
-  });
-
-  // Bills Section
-  const billsContainer = document.getElementById("bills");
-  billsContainer.innerHTML = ""; // Clear existing bills
-  user.accbills.forEach((bill) => {
-    const billDiv = document.createElement("div");
-    billDiv.classList.add("bill");
-    const statusClass =
-      bill.accbillstatus === "Paid" ? "billactive" : "billpanding"; // Assuming "Unpaid" as pending
-    billDiv.innerHTML = `
-      <div class="billbody">
-        <div class="billstatus ${statusClass}"></div>
-        <div class="billtitle">${bill.accbillname}</div>
-      </div>
-      <button type="button">Pay</button>
-    `;
-    billsContainer.appendChild(billDiv);
-  });
+    const firstSection = document.querySelector('.main > div');
+    if (firstSection) {
+      firstSection.style.display = 'block';
+      setTimeout(() => {
+        firstSection.style.opacity = '1';
+      }, 100);
+    }
+  }
 }
 
-// Run auth check and populate data on page load
-document.addEventListener("DOMContentLoaded", function () {
-  const user = authChecker(); // Check auth and get user
-  if (user) {
-    populateUserData(user); // Populate the dashboard with user data
-  }
-
-  const navItems = document.querySelectorAll(".navli a"); // Select all navbar links
-  const contentSections = document.querySelectorAll(".main > div"); // Select all content divs
-
-  // Function to show the selected section and hide others
-  function showSection(id) {
-    contentSections.forEach((section) => {
-      if (section.id === id) {
-        section.style.display = "block"; // Make visible
-        setTimeout(() => {
-          section.style.opacity = "1"; // Smooth fade-in
-        }, 50);
-      } else {
-        section.style.opacity = "0"; // Start fade-out
-        setTimeout(() => {
-          section.style.display = "none"; // Hide completely after fading
-        }, 300);
-      }
-    });
-  }
-
-  // Add event listeners to navbar items
-  navItems.forEach((item) => {
-    item.addEventListener("click", function (e) {
-      e.preventDefault();
-      navItems.forEach((nav) => nav.classList.remove("active"));
-      this.classList.add("active");
-      const targetId = this.id.toLowerCase();
-      showSection(targetId);
-    });
-  });
-
-  // Ensure first section appears with fade-in
-  const firstSection = contentSections[0];
-  if (firstSection) {
-    firstSection.style.display = "block";
-    setTimeout(() => {
-      firstSection.style.opacity = "1";
-    }, 100);
-  }
+// Initialize the dashboard when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  new DashboardController();
 });
-*/
+
+// Initial auth check
+DashboardController.authChecker();
